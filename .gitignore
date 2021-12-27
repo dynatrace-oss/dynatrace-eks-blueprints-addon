@@ -1,2 +1,5 @@
 /addon/node_modules/
 /addon/dist/
+
+*.js
+!_*.js
