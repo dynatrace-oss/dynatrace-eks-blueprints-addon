@@ -1,6 +1,8 @@
-import { ClusterAddOn, ClusterInfo } from '@aws-quickstart/ssp-amazon-eks';
+import { ClusterAddOn, ClusterInfo, Team } from '@aws-quickstart/ssp-amazon-eks';
 import { Construct } from '@aws-cdk/core'
 import {getSecretValue, loadExternalYaml, readYamlDocument} from "@aws-quickstart/ssp-amazon-eks/dist/utils";
+import * as eks from "@aws-cdk/aws-eks";
+import * as Cluster from "cluster";
 
 /**
  * Configuration options for the add-on.
@@ -36,6 +38,7 @@ export class DynatraceOperatorAddOn implements ClusterAddOn {
         const crdManifest: Record<string,any>[] = loadExternalYaml(this.CustomResourceUrl);
         const manifest = clusterInfo.cluster.addManifest("DynaKubeCustomResource", ...crdManifest)
 
+
         if (this.SSMSecretName != "") {
             const secretValue = await getSecretValue(this.SSMSecretName!, clusterInfo.cluster.stack.region);
             let credentials: DtSecret = JSON.parse(secretValue)
@@ -53,12 +56,14 @@ export class DynatraceOperatorAddOn implements ClusterAddOn {
                 applicationName: clusterInfo.cluster.clusterName,
                 paasToken: this.PaasToken,
                 apiToken: this.ApiToken,
-                apiUrl: this.ApiUrl
+                apiUrl: this.ApiUrl,
+                activeGate: {
+                    capabilities: ["kubernetes-monitoring"]
+                }
             }
         });
 
         operatorHelmChart.node.addDependency(manifest)
         return operatorHelmChart
     }
-
 }
