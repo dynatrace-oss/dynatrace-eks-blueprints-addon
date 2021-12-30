@@ -16,3 +16,4 @@ jobs:
           ignore-unfixed: true
           format: 'table'
           severity: 'HIGH, CRITICAL'
+          scan-ref: ./addon
