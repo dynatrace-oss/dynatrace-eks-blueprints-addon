@@ -39,5 +39,5 @@ jobs:
           scan-type: 'fs'
           ignore-unfixed: true
           format: 'table'
-          severity: 'HIGH, CRITICAL'
+          severity: 'HIGH,CRITICAL'
           scan-ref: ./addon
