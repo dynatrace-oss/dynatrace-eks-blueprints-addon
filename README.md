@@ -1,6 +1,6 @@
 # Dynatrace Add-On for the Amazon Shared Services Platform
 
-[![vuln_scan](https://github.com/dynatrace-oss/dynatrace-ssp-addon/actions/workflows/trivy.yml/badge.svg)](https://github.com/dynatrace-oss/dynatrace-ssp-addon/actions/workflows/trivy.yml)
+[![main](https://github.com/dynatrace-oss/dynatrace-ssp-addon/actions/workflows/main.yml/badge.svg)](https://github.com/dynatrace-oss/dynatrace-ssp-addon/actions/workflows/main.yml)
 
 ## Example Configuration (secrets in SSM):
 * Create API and PaaS Tokens as described here: https://www.dynatrace.com/support/help/reference/dynatrace-concepts/why-do-i-need-an-environment-id/#create-user-generated-access-tokens

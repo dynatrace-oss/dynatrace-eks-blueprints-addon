@@ -26,6 +26,7 @@ jobs:
         name: Build
 
   trivy:
+    needs: [build]
     name: Trivy Scan
     runs-on: ubuntu-18.04
     steps:
