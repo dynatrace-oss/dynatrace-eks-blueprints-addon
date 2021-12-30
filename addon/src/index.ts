@@ -1,8 +1,6 @@
-import { ClusterAddOn, ClusterInfo, Team } from '@aws-quickstart/ssp-amazon-eks';
+import { ClusterAddOn, ClusterInfo } from '@aws-quickstart/ssp-amazon-eks';
 import { Construct } from '@aws-cdk/core'
-import {getSecretValue, loadExternalYaml, readYamlDocument} from "@aws-quickstart/ssp-amazon-eks/dist/utils";
-import * as eks from "@aws-cdk/aws-eks";
-import * as Cluster from "cluster";
+import {getSecretValue, loadExternalYaml} from "@aws-quickstart/ssp-amazon-eks/dist/utils";
 
 /**
  * Configuration options for the add-on.
@@ -35,13 +33,13 @@ export class DynatraceOperatorAddOn implements ClusterAddOn {
     }
 
     async deploy(clusterInfo: ClusterInfo): Promise<Construct> {
-        const crdManifest: Record<string,any>[] = loadExternalYaml(this.CustomResourceUrl);
+        const crdManifest: Record<string, unknown>[] = loadExternalYaml(this.CustomResourceUrl);
         const manifest = clusterInfo.cluster.addManifest("DynaKubeCustomResource", ...crdManifest)
 
 
         if (this.SSMSecretName != "") {
-            const secretValue = await getSecretValue(this.SSMSecretName!, clusterInfo.cluster.stack.region);
-            let credentials: DtSecret = JSON.parse(secretValue)
+            const secretValue = await getSecretValue(this.SSMSecretName, clusterInfo.cluster.stack.region);
+            const credentials: DtSecret = JSON.parse(secretValue)
             this.ApiUrl = credentials.API_URL
             this.ApiToken = credentials.API_TOKEN
             this.PaasToken = credentials.PAAS_TOKEN

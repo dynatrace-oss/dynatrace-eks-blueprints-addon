@@ -1,26 +1,33 @@
 {
-  "name": "@dynatraceoss/dynatrace-ssp-addon",
+  "name": "@dynatrace-oss/dynatrace-ssp-addon",
   "version": "0.0.2",
   "description": "Dynatrace Operator Addon for AWS SSP CDK Platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src --ext .ts"
   },
   "files": [
     "/dist"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thschue/dynatrace-ssp-addon.git"
+    "url": "git+https://github.com/dynatrace-oss/dynatrace-ssp-addon.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "author": "Thomas Schuetz <thomas.schuetz@dynatrace.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/jest": "^26.0.10",
     "@types/node": "10.17.27",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
     "aws-cdk": "2.3.0",
+    "eslint": "^8.5.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
     "ts-node": "^9.0.0",
