@@ -10,7 +10,7 @@ on:
   pull_request:
   push:
     branches:
-      - "master"
+      - "main"
 jobs:
   dco-check:
     runs-on: ubuntu-latest
