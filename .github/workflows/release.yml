@@ -1,0 +1,91 @@
+name: Release
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build on Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm ci --ignore-scripts
+        working-directory: ./${{ matrix.addons }}
+
+      - run: npm run lint
+        working-directory: ./${{ matrix.addons }}
+        name: Lint
+
+      - run: npm run build --if-present
+        working-directory: ./${{ matrix.addons }}
+        name: Build
+
+      - run: npm version ${{ github.event.release.tag_name }}
+        working-directory: ./addon
+        name: Update Version Number
+
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}   
+          package: ./addon/package.json
+
+  trivy:
+    needs: [build]
+    name: Trivy Scan
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'table'
+          severity: 'HIGH,CRITICAL'
+          scan-ref: ./addon
+
+  generate-dependencies:
+    needs: [trivy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Core Repo
+        uses: actions/checkout@v2.4.0
+        with:
+          path: 'keptn-sandbox/keptn-ssp-addons'
+      - name: Set up Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: 14
+      - name: Install npm libs
+        run: |
+          yarn global add license-report
+      - name: Node dependencies and licenses
+        run: |
+          echo "🔍 Analyzing dependencies in documentation"
+          ( cd dynatrace-oss/dynatrace-ssp-addon/addon || return ; license-report --only-prod --output=csv > ../../../dependencies-and-licenses-node.txt )
+          echo
+          echo "👍 done. written results to ./dependencies-and-licenses-node.txt"
+          cat dependencies-and-licenses-node.txt
+
+      - name: Upload Release Asset - Add-On SBOM
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./dependencies-and-licenses-node.txt
+          asset_name: dependencies-and-licenses-node.txt
+          asset_content_type: text/plain
