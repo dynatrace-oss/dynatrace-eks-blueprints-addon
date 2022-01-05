@@ -84,7 +84,7 @@ new ssp.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
 ## Adding your EKS Cluster to Dynatrace
 After creating your EKS Cluster, connect to this cluster with kubectl and find out the UUID of the "kube-system" Namespace of this:
 ```
-k get ns kube-system -ojsonpath='{.metadata.uid}'
+kubectl get ns kube-system -ojsonpath='{.metadata.uid}'
 ```
 
 Afterwards, open Dynatrace in your browser, click on "Infrastructure -> Kubernetes" and "Connect manually". Check "Connect containerized ActiveGate to local Kubernetes API endpoint", add a name and copy the UUID of the kube-system namespace into the "Kubernetes cluster ID" field. Afterwards, click save.
