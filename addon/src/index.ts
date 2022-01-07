@@ -17,28 +17,28 @@ export interface DynatraceAddOnProps extends HelmAddOnUserProps {
     /**
      * Dynatrace API Token is used to connect to the Dynatrace API, not needed if a ssmSecretName is specified
      */
-    apiToken: string
+    apiToken?: string
 
     /**
      * Dynatrace API URL is used to connect to the Dynatrace API, not needed if a ssmSecretName is specified
      */
-    apiUrl: string
+    apiUrl?: string
 
     /**
      * Dynatrace PaaS Token is used to connect to the Dynatrace API, not needed if a ssmSecretName is specified
      */
-    paasToken: string
+    paasToken?: string
 
     /**
      * The Location from where the Custom Resource Definition for the DynaKube Object is downloaded
      * @default https://github.com/Dynatrace/dynatrace-operator/releases/download/v0.3.0/dynatrace.com_dynakubes.yaml
      */
-    customResourceUrl: string
+    customResourceUrl?: string
 
     /**
      * The AWS Secrets Manager Secret which is containing the Dynatrace API URL, PaaS Token and API Token (keys: API_URL, API_TOKEN, API_URL)
      */
-    ssmSecretName: string
+    ssmSecretName?: string
 }
 
 export const defaultProps: HelmAddOnProps & DynatraceAddOnProps = {
@@ -64,12 +64,12 @@ export class DynatraceAddOn extends HelmAddOn {
     }
 
     async deploy(clusterInfo: ClusterInfo): Promise<Construct> {
-        const crdManifest: Record<string, unknown>[] = loadExternalYaml(this.options.customResourceUrl);
+        const crdManifest: Record<string, unknown>[] = loadExternalYaml(<string>this.options.customResourceUrl);
         const manifest = clusterInfo.cluster.addManifest("DynaKubeCustomResource", ...crdManifest)
 
 
         if (this.options.ssmSecretName != "") {
-            const secretValue = await getSecretValue(this.options.ssmSecretName, clusterInfo.cluster.stack.region);
+            const secretValue = await getSecretValue(<string>this.options.ssmSecretName, clusterInfo.cluster.stack.region);
             const credentials: DtSecret = JSON.parse(secretValue)
             this.options.apiUrl = credentials.API_URL
             this.options.apiToken = credentials.API_TOKEN
