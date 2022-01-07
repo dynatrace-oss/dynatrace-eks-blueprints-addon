@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@aws-cdk/core": "1.135.0",
-    "@aws-quickstart/ssp-amazon-eks": "^0.12.4",
+    "@aws-quickstart/ssp-amazon-eks": "^0.12.3",
     "@types/async": "3.2.7"
   }
 }

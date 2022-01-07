@@ -64,7 +64,7 @@ import * as ssp from '@aws-quickstart/ssp-amazon-eks'
 
 const app = new cdk.App();
 
-const Dynatrace = new dt.DynatraceOperatorAddOn({
+const Dynatrace = new dt.DynatraceAddOn({
   apiUrl: "https://<your-dynatrace-tenant-url>/api",
   apiToken: "<your-api-token",
   paasToken: "<your-paas-token>"
