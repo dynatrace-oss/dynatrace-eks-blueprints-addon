@@ -16,9 +16,6 @@
     "type": "git",
     "url": "git+https://github.com/dynatrace-oss/dynatrace-ssp-addon.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "author": "Thomas Schuetz <thomas.schuetz@dynatrace.com>",
   "license": "Apache-2.0",
   "devDependencies": {
