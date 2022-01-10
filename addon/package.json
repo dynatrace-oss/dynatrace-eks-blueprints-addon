@@ -1,5 +1,5 @@
 {
-  "name": "@dynatrace-oss/dynatrace-ssp-addon",
+  "name": "@dynatrace/dynatrace-ssp-addon",
   "version": "0.0.2",
   "description": "Dynatrace Operator Addon for AWS SSP CDK Platform",
   "main": "dist/index.js",
