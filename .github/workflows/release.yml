@@ -39,6 +39,7 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}   
           package: ./addon/package.json
+          access: public
 
   trivy:
     needs: [build]
