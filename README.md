@@ -1,7 +1,7 @@
-# Dynatrace Add-On for the Amazon Shared Services Platform
-[![main](https://github.com/dynatrace-oss/dynatrace-ssp-addon/actions/workflows/main.yml/badge.svg)](https://github.com/dynatrace-oss/dynatrace-ssp-addon/actions/workflows/main.yml)
+# Dynatrace Add-On for Amazon EKS Blueprints
+[![main](https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon/actions/workflows/main.yml/badge.svg)](https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon/actions/workflows/main.yml)
 
-The Dynatrace Add-On for the Amazon Shared Services Platform enables platform administrators to install the Dynatrace OneAgent Operator during the bootstrapping process of an [EKS](https://aws.amazon.com/eks/) cluster.
+The Dynatrace Add-On for Amazon EKS Blueprints enables platform administrators to install the Dynatrace OneAgent Operator during the bootstrapping process of an [EKS](https://aws.amazon.com/eks/) cluster.
 
 Therefore, this add-on installs the [Dynatrace Operator Helm Chart](https://github.com/Dynatrace/helm-charts/tree/master/dynatrace-operator) and configures the operator to use a Dynatrace Tenant with credentials specified by variables or a Amazon Secrets Manager Secret.
 
@@ -27,14 +27,14 @@ Therefore:
 ## Usage
 The add-on can be used by either specifying the name of a Secrets Manager secret or the API Tokens.
 
-You can find informations how to get started with SSP Projects [here](https://aws-quickstart.github.io/ssp-amazon-eks/getting-started/). 
+You can find informations how to get started with SSP Projects [here](https://aws-quickstart.github.io/cdk-eks-blueprints/getting-started/). 
 
 ### Example Configuration (secrets in Secrets Manager):
 ```typescript
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core'
-import * as dt from '@dynatrace/dynatrace-ssp-addon'
-import * as ssp from '@aws-quickstart/ssp-amazon-eks'
+import * as dt from '@dynatrace/dynatrace-eks-blueprints-addon'
+import * as blueprints from '@aws-quickstart/eks-blueprints'
 
 const app = new cdk.App();
 
@@ -44,14 +44,14 @@ const Dynatrace = new dt.DynatraceOperatorAddOn({
 })
 
 
-const addOns: Array<ssp.ClusterAddOn> = [
+const addOns: Array<blueprints.ClusterAddOn> = [
     Dynatrace,
 ];
 
 const account = '<aws-account-id>';
 const region = '<aws-region>';
 const props = { env: { account, region } };
-new ssp.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
+new blueprints.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
 ```
 
 ### Example Configuration (secrets in code):
@@ -59,8 +59,8 @@ new ssp.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
 ```typescript
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core'
-import * as dt from '@dynatraceoss/dynatrace-ssp-addon'
-import * as ssp from '@aws-quickstart/ssp-amazon-eks'
+import * as dt from '@dynatraceoss/dynatrace-eks-blueprints-addon'
+import * as blueprints from '@aws-quickstart/eks-blueprints'
 
 const app = new cdk.App();
 
@@ -71,14 +71,14 @@ const Dynatrace = new dt.DynatraceAddOn({
 })
 
 
-const addOns: Array<ssp.ClusterAddOn> = [
+const addOns: Array<blueprints.ClusterAddOn> = [
     Dynatrace,
 ];
 
 const account = '<aws-account-id>';
 const region = '<aws-region>';
 const props = { env: { account, region } };
-new ssp.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
+new blueprints.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
 ```
 
 ## Adding your EKS Cluster to Dynatrace
