@@ -38,7 +38,7 @@ import * as blueprints from '@aws-quickstart/eks-blueprints'
 
 const app = new cdk.App();
 
-const Dynatrace = new dt.DynatraceOperatorAddOn({
+const Dynatrace = new dt.DynatraceAddOn({
   // In this example, the secret is called "dynatrace-tokens"
   ssmSecretName: "dynatrace-tokens"
 })
