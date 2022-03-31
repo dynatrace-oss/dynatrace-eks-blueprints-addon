@@ -1,7 +1,7 @@
-import { ClusterInfo } from '@aws-quickstart/ssp-amazon-eks';
-import { Construct } from '@aws-cdk/core'
-import {getSecretValue, loadExternalYaml} from "@aws-quickstart/ssp-amazon-eks/dist/utils";
-import {HelmAddOn, HelmAddOnProps, HelmAddOnUserProps} from "@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon";
+import { ClusterInfo } from '@aws-quickstart/eks-blueprints';
+import { Construct } from 'constructs'
+import {getSecretValue, loadExternalYaml} from "@aws-quickstart/eks-blueprints/dist/utils";
+import {HelmAddOn, HelmAddOnProps, HelmAddOnUserProps} from "@aws-quickstart/eks-blueprints/dist/addons/helm-addon";
 
 /**
  * Configuration options for the add-on.
@@ -44,7 +44,7 @@ export interface DynatraceAddOnProps extends HelmAddOnUserProps {
 export const defaultProps: HelmAddOnProps & DynatraceAddOnProps = {
     name: 'dynatrace-operator',
     chart: 'dynatrace-operator',
-    release: 'ssp-addon-dynatrace',
+    release: 'eks-blueprints-addon-dynatrace',
     namespace: "dynatrace",
     repository: "https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable",
     apiToken: "",
@@ -52,7 +52,7 @@ export const defaultProps: HelmAddOnProps & DynatraceAddOnProps = {
     paasToken: "",
     customResourceUrl: "https://github.com/Dynatrace/dynatrace-operator/releases/download/v0.3.0/dynatrace.com_dynakubes.yaml",
     ssmSecretName: "",
-    version:"0.3.0",
+    version:"0.4.0",
 }
 
 export class DynatraceAddOn extends HelmAddOn {

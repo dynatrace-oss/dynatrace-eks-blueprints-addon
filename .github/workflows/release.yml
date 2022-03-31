@@ -65,7 +65,7 @@ jobs:
       - name: Checkout Core Repo
         uses: actions/checkout@v2.4.0
         with:
-          path: 'keptn-sandbox/keptn-ssp-addons'
+          path: 'dynatrace-oss/dynatrace-eks-blueprints-addons'
       - name: Set up Node
         uses: actions/setup-node@v2.5.0
         with:
@@ -76,7 +76,7 @@ jobs:
       - name: Node dependencies and licenses
         run: |
           echo "🔍 Analyzing dependencies in documentation"
-          ( cd dynatrace-oss/dynatrace-ssp-addon/addon || return ; license-report --only-prod --output=csv > ../../../dependencies-and-licenses-node.txt )
+          ( cd dynatrace-oss/dynatrace-eks-blueprints-addon/addon || return ; license-report --only-prod --output=csv > ../../../dependencies-and-licenses-node.txt )
           echo
           echo "👍 done. written results to ./dependencies-and-licenses-node.txt"
           cat dependencies-and-licenses-node.txt
