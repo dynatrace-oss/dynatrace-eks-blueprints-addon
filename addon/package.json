@@ -30,7 +30,7 @@
     "typescript": "~3.9.7"
   },
   "dependencies": {
-    "@types/async": "3.2.7",
+    "@types/async": "3.2.13",
     "constructs": "^10.0.100",
     "source-map-support": "^0.5.16",
     "@aws-quickstart/eks-blueprints": "latest",
