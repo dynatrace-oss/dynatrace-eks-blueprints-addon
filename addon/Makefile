@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Libraries
 TSC := node node_modules/.bin/tsc
 
