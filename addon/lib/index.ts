@@ -2,6 +2,7 @@ import { ClusterInfo } from '@aws-quickstart/eks-blueprints';
 import { Construct } from 'constructs'
 import {getSecretValue, loadExternalYaml} from "@aws-quickstart/eks-blueprints/dist/utils";
 import {HelmAddOn, HelmAddOnProps, HelmAddOnUserProps} from "@aws-quickstart/eks-blueprints/dist/addons/helm-addon";
+import { KubernetesManifest } from "@aws-quickstart/eks-blueprints/node_modules/aws-cdk-lib/aws-eks/lib/k8s-manifest";
 
 /**
  * Configuration options for the add-on.
@@ -64,30 +65,34 @@ export class DynatraceAddOn extends HelmAddOn {
         this.options = this.props as DynatraceAddOnProps
     }
 
-    async deploy(clusterInfo: ClusterInfo): Promise<Construct> {
+    deploy(clusterInfo: ClusterInfo): void | Promise<Construct> {
         const crdManifest: Record<string, unknown>[] = loadExternalYaml(<string>this.options.customResourceUrl);
         const manifest = clusterInfo.cluster.addManifest("DynaKubeCustomResource", ...crdManifest)
 
-
         if (this.options.ssmSecretName != "") {
-            const secretValue = await getSecretValue(<string>this.options.ssmSecretName, clusterInfo.cluster.stack.region);
+          return getSecretValue(<string>this.options.ssmSecretName, clusterInfo.cluster.stack.region).then(secretValue => {
             const credentials: DtSecret = JSON.parse(secretValue)
             this.options.apiUrl = credentials.API_URL
             this.options.apiToken = credentials.API_TOKEN
             this.options.paasToken = credentials.PAAS_TOKEN
+          })
+          .then(() => this.addHelmChartToAddOn(clusterInfo, manifest))
+        } else {
+          Promise.resolve(this.addHelmChartToAddOn(clusterInfo, manifest));
         }
+    }
 
-        const operatorHelmChart = this.addHelmChart(clusterInfo, {
-            paasToken: this.options.paasToken,
-            apiToken: this.options.apiToken,
-            apiUrl: this.options.apiUrl,
-            activeGate: {
-                capabilities: ["kubernetes-monitoring"]
-            }
-        });
+    private addHelmChartToAddOn(clusterInfo: ClusterInfo, manifest: KubernetesManifest) {
+      const operatorHelmChart = this.addHelmChart(clusterInfo, {
+        paasToken: this.options.paasToken,
+        apiToken: this.options.apiToken,
+        apiUrl: this.options.apiUrl,
+        activeGate: {
+            capabilities: ["kubernetes-monitoring"]
+        }
+      });
 
-        operatorHelmChart.node.addDependency(manifest)
-
-        return operatorHelmChart
+      operatorHelmChart.node.addDependency(manifest);
+      return operatorHelmChart;
     }
 }
