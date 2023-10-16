@@ -38,7 +38,7 @@ import * as blueprints from '@aws-quickstart/eks-blueprints'
 
 const app = new cdk.App();
 
-const Dynatrace = new dt.DynatraceOperatorAddOn({
+const Dynatrace = new dt.DynatraceAddOn({
   // In this example, the secret is called "dynatrace-tokens"
   ssmSecretName: "dynatrace-tokens"
 })
@@ -51,7 +51,7 @@ const addOns: Array<blueprints.ClusterAddOn> = [
 const account = '<aws-account-id>';
 const region = '<aws-region>';
 const props = { env: { account, region } };
-new blueprints.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
+new blueprints.EksBlueprint(app, { id: '<aws-eks-cluster-name>', version: 'auto', addOns}, props);
 ```
 
 ### Example Configuration (secrets in code):
@@ -78,7 +78,7 @@ const addOns: Array<blueprints.ClusterAddOn> = [
 const account = '<aws-account-id>';
 const region = '<aws-region>';
 const props = { env: { account, region } };
-new blueprints.EksBlueprint(app, { id: '<aws-eks-cluster-name>', addOns}, props);
+new blueprints.EksBlueprint(app, { id: '<aws-eks-cluster-name>', version: 'auto', addOns}, props);
 ```
 
 ## Adding your EKS Cluster to Dynatrace
@@ -89,5 +89,5 @@ kubectl get ns kube-system -ojsonpath='{.metadata.uid}'
 
 Afterwards, open Dynatrace in your browser, click on "Infrastructure -> Kubernetes" and "Connect manually". Check "Connect containerized ActiveGate to local Kubernetes API endpoint", add a name and copy the UUID of the kube-system namespace into the "Kubernetes cluster ID" field. Afterwards, click save.
 
-## Enhancements / Bugs 
+## Enhancements / Bugs
 You are welcome to use issues to report bugs or request enhancements.

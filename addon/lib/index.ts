@@ -53,7 +53,6 @@ export const defaultProps: HelmAddOnProps & DynatraceAddOnProps = {
     paasToken: "",
     customResourceUrl: "https://github.com/Dynatrace/dynatrace-operator/releases/download/v0.13.0/dynatrace-operator-crd.yaml",
     ssmSecretName: "",
-    // FIXME is this supposed to be the operator version?
     version:"0.13.0",
 }
 
