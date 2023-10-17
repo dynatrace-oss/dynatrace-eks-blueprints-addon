@@ -1,13 +1,22 @@
 {
   "name": "@dynatrace/dynatrace-eks-blueprints-addon",
-  "version": "v0.0.4",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "version": "0.0.0-placeholder",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest"
+    "build": "rm -rf dist && tsc",
+    "test": "jest",
+    "lin": "eslint src --ext .ts"
   },
+  "files": [
+    "/dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon.git"
+  },
+  "author": "Thomas Schuetz <thomas.schuetz@dynatrace.com>",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@types/jest": "^29.5.5",
     "@types/node": "20.7.1",

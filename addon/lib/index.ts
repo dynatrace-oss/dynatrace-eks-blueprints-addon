@@ -47,7 +47,7 @@ export const defaultProps: HelmAddOnProps & DynatraceAddOnProps = {
     chart: 'dynatrace-operator',
     release: 'eks-blueprints-addon-dynatrace',
     namespace: "dynatrace",
-    repository: "https://raw.githubusercontent.com/Dynatrace/helm-charts/master/repos/stable",
+    repository: "https://raw.githubusercontent.com/Dynatrace/dynatrace-operator/main/config/helm/repos/stable",
     apiToken: "",
     apiUrl: "",
     paasToken: "",
@@ -77,7 +77,7 @@ export class DynatraceAddOn extends HelmAddOn {
           })
           .then(() => this.addHelmChartToAddOn(clusterInfo, manifest))
         } else {
-          Promise.resolve(this.addHelmChartToAddOn(clusterInfo, manifest));
+          return Promise.resolve(this.addHelmChartToAddOn(clusterInfo, manifest));
         }
     }
 
