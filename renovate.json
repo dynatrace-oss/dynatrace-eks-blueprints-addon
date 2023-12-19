@@ -1,0 +1,17 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "repositories": ["dynatrace-oss/dynatrace-eks-blueprints-addon"],
+    "enabledManagers": ["custom.regex"],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "fileMatch": [
+                "^addon/lib/index.ts$"
+            ],
+            "matchStrings": [
+                "chart: '(?<depName>.+)'[\\s\\S]*repository: \"(?<registryUrl>.+)\"[\\s\\S]*version:\"(?<currentValue>.+)\""
+            ],
+            "datasourceTemplate": "helm"
+        }
+    ]
+}
