@@ -8,7 +8,7 @@ export const defaultProps: HelmAddOnProps = {
     release: 'eks-blueprints-addon-dynatrace',
     namespace: "dynatrace",
     repository: "https://raw.githubusercontent.com/Dynatrace/dynatrace-operator/main/config/helm/repos/stable",
-    version:"1.2.2"
+    version:"1.3.0"
 }
 
 export class DynatraceAddOn extends HelmAddOn {
