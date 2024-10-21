@@ -1,5 +1,5 @@
 # Dynatrace Add-On for Amazon EKS Blueprints
-[![main](https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon/actions/workflows/integration-test.yml/badge.svg)](https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon/actions/workflows/integration-test.yml)
+[![main](https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon/actions/workflows/render-test.yml/badge.svg)](https://github.com/dynatrace-oss/dynatrace-eks-blueprints-addon/actions/workflows/render-test.yml)
 
 The Dynatrace Add-On for Amazon EKS Blueprints enables platform administrators to install the Dynatrace Operator during the bootstrapping process of an [EKS](https://aws.amazon.com/eks/) cluster. Therefore, this add-on installs the [Dynatrace Operator Helm Chart](https://github.com/Dynatrace/dynatrace-operator/tree/main/config/helm/repos/stable).
 
